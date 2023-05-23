@@ -23,11 +23,11 @@ if __name__ == "__main__":
     logger.info("Num Partitions after: " + str(partitionedDF.rdd.getNumPartitions()))
     partitionedDF.groupBy(spark_partition_id()).count().show()
 
-    partitionedDF.write \
-        .format("avro") \
-        .mode("overwrite") \
-        .option("path", "dataSink/avro/") \
-        .save()
+    # partitionedDF.write \
+    #     .format("avro") \
+    #     .mode("overwrite") \
+    #     .option("path", "dataSink/avro/") \
+    #     .save()
 
     flightTimeParquetDF.write \
         .format("json") \

@@ -20,6 +20,7 @@ if __name__ == "__main__":
         .orderBy(f.col("InvoiceValue").desc()) \
         .rowsBetween(Window.unboundedPreceding, Window.currentRow)
 
+    # 找出每个国家InvoiceValue 的第一名
     df = summary_df.withColumn("Rank", f.dense_rank().over(rank_window)) \
         .where(f.col("Rank") == 1) \
         .sort("Country", "WeekNumber") \

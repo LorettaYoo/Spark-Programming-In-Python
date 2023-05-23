@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import broadcast
 
 from lib.logger import Log4j
 
@@ -14,10 +15,12 @@ if __name__ == "__main__":
     flight_time_df1 = spark.read.json("data/d1/")
     flight_time_df2 = spark.read.json("data/d2/")
 
+    # 这种配置将确保我们在shuffle之后得到三个分区, 这意味着有三个reduce交换｡
     spark.conf.set("spark.sql.shuffle.partitions", 3)
 
     join_expr = flight_time_df1.id == flight_time_df2.id
-    join_df = flight_time_df1.join(flight_time_df2, join_expr, "inner")
+    # join_df = flight_time_df1.join(flight_time_df2, join_expr, "inner")
+    join_df = flight_time_df1.join(broadcast(flight_time_df2), join_expr, "inner")
 
     join_df.collect()
     input("press a key to stop...")

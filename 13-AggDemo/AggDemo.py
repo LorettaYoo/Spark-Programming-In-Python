@@ -31,6 +31,7 @@ if __name__ == "__main__":
         "avg(UnitPrice) as AvgPrice"
     ).show()
 
+    # 首先创建表，再用 spark.sql
     invoice_df.createOrReplaceTempView("sales")
     summary_sql = spark.sql("""
           SELECT Country, InvoiceNo,

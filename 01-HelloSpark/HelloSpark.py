@@ -23,7 +23,8 @@ if __name__ == "__main__":
     survey_raw_df = load_survey_df(spark, sys.argv[1])
     partitioned_survey_df = survey_raw_df.repartition(2)
     count_df = count_by_country(partitioned_survey_df)
-    count_df.show()
+    count_df.collect()
 
-    logger.info("Finished HelloSpark")
-    spark.stop()
+    input("Please Print Enter")
+    # logger.info("Finished HelloSpark")
+    # spark.stop()

@@ -22,7 +22,7 @@ if __name__ == "__main__":
         .option("inferSchema", "true") \
         .csv(sys.argv[1])
 
-    surveyDF.createOrReplaceTempView("survey_tbl")
+    surveyDF.createOrReplaceTempView("survey_tbl")  # 创建表
     countDF = spark.sql("select Country, count(1) as count from survey_tbl where Age<40 group by Country")
 
     countDF.show()
